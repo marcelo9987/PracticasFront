@@ -1,66 +1,106 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import {useEffect, useState} from "react";
+import {getPaises, getPaisesPorNombre} from "@/lib/api/paises";
+import "./page.css"
+import Link from "next/link";
+import {CountryCard} from "@/components/CountryCard";
+import {Country} from "@/types/Country";
 
-export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+
+const Home = () =>
+{
+    const [primerRender, setPrimerRender] = useState(true);
+    const [paises, setPaises] = useState<Array<any> | null>(null);
+    const [entrada, setEntrada] = useState<string>("");
+    const [cargando, setCargando] = useState<boolean>(true);
+
+    const buscarTodos = async () =>
+    {
+        setPaises(await getPaises());
+    };
+    if(primerRender)
+    {
+        buscarTodos().then(r =>
+        {
+        }).catch(e =>
+        {
+            console.error("Error al buscar países:", e);
+        }
+        ).finally(() =>
+        {
+            setCargando(false);
+        });
+        setPrimerRender(false);
+    }
+
+    const buscarPaises = async () =>
+    {
+        console.log("Buscando países con entrada:", entrada);
+        setPaises(await getPaisesPorNombre(entrada));
+    }
+
+    useEffect(() =>
+    {
+        buscarPaises();
+    }, [entrada]);
+
+
+    return (
+
+        <div>
+            <div>
+                    <h1>Países del mundo</h1>
+            </div>
+
+
+
+
+
+            <div className={"contenedor-paises"}>
+                <div className={"entrada-paises"}>
+                <input
+                    value={entrada}
+                    onChange={(e) => setEntrada(e.target.value)}
+                    placeholder="País a buscar"
+                />
+                  <button onClick={buscarPaises}>Buscar</button>
+                </div>
+
+                <div className={"lista-paises"}>
+                    { cargando &&
+                        <p>Cargando países...</p>
+                    }
+                { paises &&
+                    (
+                        <ul>
+                            {paises.map((paisEspecifico: Country) =>
+                                (
+                                    <CountryCard
+                                        key={paisEspecifico.name.common}
+
+                                        pais={
+                                            {
+                                                name: paisEspecifico.name.common,
+                                                flag: paisEspecifico.flag
+                                            }
+                                        }
+                                    />
+
+                                    // <li key={pais.name.common}>
+                                    //     {pais.flag}
+                                    //     {/*{pais.name.common}*/}
+                                    //     <Link href={`/country/${pais.name.common}`}>{pais.name.common}</Link>
+                                    // </li>
+
+                                ))}
+                        </ul>
+                    )
+                }
+            </div>
+            </div>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+
+    );
 }
+
+export default Home;

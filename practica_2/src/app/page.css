@@ -1,0 +1,21 @@
+.contenedor-paises{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    font-size: 20px;
+}
+
+.lista-paises{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.entrada-paises
+{
+    display: flex;
+    max-width: 25%;
+}
