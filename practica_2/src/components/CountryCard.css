@@ -2,5 +2,9 @@
     width: 200px;
     padding: 16px;
     border: 1px solid #ccc;
-    /*text-align: center;*/
+    transition: background-color 0.3s;
 }
+.country-card:hover {
+    background-color: indianred;
+}
+

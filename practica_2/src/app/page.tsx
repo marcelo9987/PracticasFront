@@ -1,47 +1,44 @@
 "use client";
 import {useEffect, useState} from "react";
 import {getPaises, getPaisesPorNombre} from "@/lib/api/paises";
-import "./page.css"
-import Link from "next/link";
-import {CountryCard} from "@/components/CountryCard";
+import "./page.css";
 import {Country} from "@/types/Country";
+import {CountryCard} from "@/components/CountryCard";
 
 
 const Home = () =>
 {
-    const [primerRender, setPrimerRender] = useState(true);
-    const [paises, setPaises] = useState<Array<any> | null>(null);
+    const [paises, setPaises] = useState<Array<Country>>([]);
     const [entrada, setEntrada] = useState<string>("");
+
     const [cargando, setCargando] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(false);
 
     const buscarTodos = async () =>
     {
         setPaises(await getPaises());
     };
-    if(primerRender)
-    {
-        buscarTodos().then(r =>
-        {
-        }).catch(e =>
-        {
-            console.error("Error al buscar países:", e);
-        }
-        ).finally(() =>
-        {
-            setCargando(false);
-        });
-        setPrimerRender(false);
-    }
 
     const buscarPaises = async () =>
     {
-        console.log("Buscando países con entrada:", entrada);
         setPaises(await getPaisesPorNombre(entrada));
-    }
+    };
 
     useEffect(() =>
     {
-        buscarPaises();
+
+        setCargando(true);
+        setError(false);
+
+        const fetch = entrada.trim() ? buscarPaises : buscarTodos;
+        fetch().catch((e) =>
+            {
+                console.error("Error al buscar países:", e);
+                setError(true);
+            }).finally(() =>
+            {
+                setCargando(false);
+            });
     }, [entrada]);
 
 
@@ -49,58 +46,54 @@ const Home = () =>
 
         <div>
             <div>
-                    <h1>Países del mundo</h1>
+                <h1>Países del mundo</h1>
             </div>
-
-
-
 
 
             <div className={"contenedor-paises"}>
                 <div className={"entrada-paises"}>
-                <input
-                    value={entrada}
-                    onChange={(e) => setEntrada(e.target.value)}
-                    placeholder="País a buscar"
-                />
-                  <button onClick={buscarPaises}>Buscar</button>
+                    <input
+                        value={entrada}
+                        onChange={(e) => setEntrada(e.target.value)}
+                        placeholder="País a buscar"
+                    />
                 </div>
 
                 <div className={"lista-paises"}>
-                    { cargando &&
+                    {cargando &&
                         <p>Cargando países...</p>
                     }
-                { paises &&
-                    (
-                        <ul>
-                            {paises.map((paisEspecifico: Country) =>
-                                (
-                                    <CountryCard
-                                        key={paisEspecifico.name.common}
 
-                                        pais={
-                                            {
-                                                name: paisEspecifico.name.common,
-                                                flag: paisEspecifico.flag
+                    {
+                        error &&
+                        <p>Error al cargar países. Por favor, inténtalo de nuevo más tarde.</p>
+                    }
+
+                    {!cargando && !error &&
+                        (
+                            <ul>
+                                {paises.map((paisEspecifico: Country) =>
+                                    (
+                                        <CountryCard
+                                            key={paisEspecifico.name.common}
+
+                                            pais={
+                                                {
+                                                    name: paisEspecifico.name.common,
+                                                    flag: paisEspecifico.flag
+                                                }
                                             }
-                                        }
-                                    />
-
-                                    // <li key={pais.name.common}>
-                                    //     {pais.flag}
-                                    //     {/*{pais.name.common}*/}
-                                    //     <Link href={`/country/${pais.name.common}`}>{pais.name.common}</Link>
-                                    // </li>
-
-                                ))}
-                        </ul>
-                    )
-                }
-            </div>
+                                        />
+                                    ))}
+                            </ul>
+                        )
+                    }
+                </div>
             </div>
         </div>
 
-    );
-}
+    )
+        ;
+};
 
 export default Home;
