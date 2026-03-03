@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {getPaises, getPaisesPorNombre} from "@/lib/api/paises";
 import "./page.css";
 import {Country} from "@/types/Country";
-import {CountryCard} from "@/components/CountryCard";
+import {CountryCard} from "@/components/CountryCard/CountryCard";
 
 
 const Home = () =>
@@ -45,7 +45,7 @@ const Home = () =>
     return (
 
         <div>
-            <div>
+            <div className={"titulo"}>
                 <h1>Países del mundo</h1>
             </div>
 
@@ -71,21 +71,23 @@ const Home = () =>
 
                     {!cargando && !error &&
                         (
-                            <ul>
-                                {paises.map((paisEspecifico: Country) =>
+                            <ol>
+                                {[...paises]
+                                    .sort((a, b) => a.cca3.localeCompare(b.cca3))
+                                        .map((paisEspecifico: Country) =>
                                     (
                                         <CountryCard
-                                            key={paisEspecifico.name.common}
+                                            key={paisEspecifico.cca3}
 
                                             pais={
                                                 {
                                                     name: paisEspecifico.name.common,
-                                                    flag: paisEspecifico.flag
+                                                    flag: paisEspecifico.flag,
                                                 }
                                             }
                                         />
                                     ))}
-                            </ul>
+                            </ol>
                         )
                     }
                 </div>
