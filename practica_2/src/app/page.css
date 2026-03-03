@@ -1,28 +1,101 @@
-.titulo
-{
-    display:flex;
-    flex-wrap: wrap;
-    align-items: center;
+/* page.css */
+
+/* Contedor principal */
+.titulo {
+    text-align: center;
+    margin: 20px 0;
+    color: #ea1010;
 }
 
-.contenedor-paises{
+.contenedor-paises {
+    width: 90%;
+    max-width: 90%;
+    min-width: 70%;
+    margin: 0 auto;
     display: flex;
-    flex-flow: column wrap;
-    align-items: center;
+    flex-direction: column;
     gap: 20px;
-    padding: 20px;
-    font-size: 20px;
 }
 
-.lista-paises{
+/* Entrada e botón de búsqueda */
+.entrada-paises {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-
+    gap: 10px;
 }
 
-.entrada-paises
-{
+.entrada-paises input {
+    padding: 8px 12px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.entrada-paises input:focus {
+    border-color: #0070f3;
+    outline: none;
+}
+
+.entrada-paises button {
+    padding: 8px 16px;
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.entrada-paises button:hover {
+    background-color: #005bb5;
+}
+
+/* Lista de países */
+.lista-paises ol {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+    padding: 0;
+}
+
+.lista-paises p {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* CountryCard personalizado */
+.country-card {
     display: flex;
-    max-width: 25%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #fafafa;
+    cursor: pointer;
+}
+
+.country-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.country-card img {
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.country-card h2 {
+    font-size: 1rem;
+    color: #333;
+    margin-top: 5px;
 }

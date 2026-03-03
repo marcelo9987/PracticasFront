@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Página con buscador de países  del mundo
 
-## Getting Started
+[![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
+[![license](https://img.shields.io/badge/license-%20%20GNU%20GPLv3%20-green?style=plastic)](LICENSE)
 
-First, run the development server:
+## Instalación
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```text
+git clone https://github.com/marcelo9987/PracticasProgramacionDeSistemasEnInternet/
+cd practica_2
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Uso
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A continuación, abrir en firefox la url: http://localhost:3000/ o http://127.0.0.1:3000/
 
-## Learn More
+## Estructura
 
-To learn more about Next.js, take a look at the following resources:
+```
+practica_2/
+├── src/
+│   ├── app/                          # Directorio principal de la aplicación Next.js
+│   │   ├── layout.tsx                # Layout raíz de la aplicación
+│   │   ├── page.tsx                  # Página principal con buscador de países
+│   │   ├── page.css                  # Estilos de la página principal
+│   │   ├── globals.css               # Estilos globales
+│   │   ├── country/
+│   │   │   └── [name]/
+│   │   │       ├── page.tsx          # Página dinámica para detalles del país
+│   │   │       └── page.css          # Estilos de la página de país
+│   │   └── favicon.ico               # Favicon de la aplicación
+│   │
+│   ├── components/                   # Componentes reutilizables
+│   │   ├── CountryCard/
+│   │   │   ├── CountryCard.tsx       # Componente para mostrar tarjeta de país
+│   │   │   └── CountryCard.css       # Estilos de la tarjeta
+│   │   └── FullCountryPage/
+│   │       └── FullCountryPage.tsx   # Componente para página completa del país
+│   │
+│   ├── lib/                          # Utilidades y librerías
+│   │   └── api/
+│   │       ├── axios.ts              # Configuración de axios
+│   │       └── paises.ts             # Funciones para obtener datos de países
+│   │
+│   └── types/
+│       └── Country.ts                # Tipos TypeScript para Country y FullCountry
+│
+├── public/                           # Archivos estáticos públicos
+│   ├── next.svg
+│   ├── vercel.svg
+│   ├── globe.svg
+│   ├── file.svg
+│   └── window.svg
+│
+├── package.json                      # Dependencias y scripts del proyecto
+├── tsconfig.json                     # Configuración de TypeScript
+├── next.config.ts                    # Configuración de Next.js
+└── README.md                         # Este archivo
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Descripción de directorios
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **src/app**: Contiene las rutas y páginas de la aplicación. Incluye la página principal con el buscador y una ruta dinámica para mostrar detalles de cada país.
+- **src/components**: Componentes React reutilizables como tarjetas de países y la página de detalles completa.
+- **src/lib/api**: Funciones para conectar con la API REST de países y configuración de axios.
+- **src/types**: Definiciones de tipos TypeScript para la aplicación.
+- **public**: Archivos estáticos servidos directamente por Next.js.
 
-## Deploy on Vercel
+### Funcionalidades principales
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Listado de países**: Muestra todos los países disponibles en un grid de tarjetas.
+- **Búsqueda de países**: Permite buscar países por nombre.
+- **Detalles del país**: Al hacer clic en una tarjeta, muestra información completa del país seleccionado.
+- **API REST**: Utiliza la API de REST Countries para obtener información de países.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contribuir
+
+Para contribuir, puedes crear una nueva rama y proponer tus cambios en una pull-request
+
+## Licencia
+
+GNU GPLv3
