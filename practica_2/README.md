@@ -46,7 +46,7 @@ practica_2/
 │   │       └── paises.ts             # Funciones para obtener datos de países
 │   │
 │   └── types/
-│       └── Country.ts                # Tipos TypeScript para Country y FullCountry
+│       └── Country.ts                # Tipos TypeScript para Country 
 │
 ├── public/                           # Archivos estáticos públicos
 │   ├── next.svg
