@@ -16,6 +16,8 @@ const Buscador = () =>
     const [entrada, setEntrada] = useState<string>("");
     const [albums, setAlbums] = useState<Array<Album>>([]);
     const [nClicks, setNclicks] = useState<number>(0);
+    const [estadoPagina, setEstadoPagina] = useState<boolean>(false); // 0: cargando, 1: cargado
+    const [error, setError] = useState<string | null>(null);
 
     const setAlbumsEnPagina = async () =>
     {
@@ -36,32 +38,54 @@ const Buscador = () =>
     useEffect(() =>
     {
         console.log(albums);
-        setAlbumsEnPagina().catch(() => console.log("error")).finally();
+
+        setEstadoPagina(false);
+        setAlbumsEnPagina().catch(() =>
+            {
+                setError("Error al buscar el album");
+            }
+        ).finally(() =>
+        {
+            setEstadoPagina(true);
+        });
     }, [nClicks]);
 
     return (
         <div>
             <div>
-                <Link href={'/'}><button>Voltar</button></Link>
+                <Link href={'/'}>
+                    <button>Voltar</button>
+                </Link>
             </div>
-        <input value={entrada}
-               onChange={(e) => setEntrada(e.target.value)}/>
-        <button onClick={buscar}>Buscar</button>
-        <div>
-            <ol>
-                {albums.map((album) =>
 
-                    (
-                        <AlbumCard
-                            key={album.collectionId}
-                            album={album}
-                        />
-                    )
-                )}
+            {error &&
+                <div><p>{error}</p>
+                </div>
+            }
 
-            </ol>
-        </div>
-    </div>);
+            {!error && !estadoPagina &&
+                <div><p>Cargando...</p>
+                </div>
+            }
+            {!error && estadoPagina &&
+                <div><input value={entrada}
+                         onChange={(e) => setEntrada(e.target.value)}/>
+                    <button onClick={buscar}>Buscar</button>
+                    <div>
+                        <ol>
+                            {albums.map((album) => (
+                                    <AlbumCard
+                                        key={album.collectionId}
+                                        album={album}/>
+                                )
+                            )}
+
+                        </ol>
+                    </div>
+                </div>
+}
+</div>)
+    ;
 };
 
 export default Buscador;

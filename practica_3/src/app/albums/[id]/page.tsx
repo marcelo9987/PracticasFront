@@ -7,6 +7,7 @@ import {getAlbum} from "@/lib/api/albums";
 
 const paginaIndividual = () =>
 {
+
     const params = useParams();
     if (!params.id || params.id.length === 0) {
         return (
@@ -17,6 +18,8 @@ const paginaIndividual = () =>
     }
 
     const [album, setAlbum] = useState<Album>();
+    const [error, setError] = useState(false);
+    const [cargando, setCargando] = useState(true);
 
     const obtenerAlbums = async () =>
     {
@@ -27,15 +30,26 @@ const paginaIndividual = () =>
     useEffect(() =>
     {
         document.title = "Album " + params.id;
-        obtenerAlbums().catch(() => console.log("error")).finally();
+        setCargando(true);
+        setError(false);
+
+        obtenerAlbums().catch(() =>
+        {
+            setError(true);
+        }
+        ).finally(() =>
+        {
+            setCargando(false);
+        });
 
     } , [params.id]);
 
     return (
 
         <div>
-            {album ? null : <p>Cargando...</p>}
-            {album &&
+            {error && <p>¡No se encontró el album!</p>}
+            {!error && cargando && <p>Cargando...</p>}
+            {!error && !cargando && album &&
                 <div>
                     <img src={album.artworkUrl100} alt={album.collectionName} />
                     <p>Nombre del álbum: {album.collectionName}</p>
@@ -44,17 +58,6 @@ const paginaIndividual = () =>
                     <p>Año de lanzamiento: {album.releaseDate.substring(0, 4)}</p>
                 </div>
             }
-            {/*<h1>Album {album?.collectionId}</h1>*/}
-
-            {/*{*/}
-            {/*    <div>*/}
-            {/*        <img src={album.artworkUrl100} alt={album.collectionName} />*/}
-            {/*        <p>Nombre del álbum: {album.collectionName}</p>*/}
-            {/*        <p>Artista: {album.artistName}</p>*/}
-            {/*        <p>Género: {album.primaryGenreName}</p>*/}
-            {/*        <p>Año de lanzamiento: {album.releaseDate.substring(0, 4)}</p>*/}
-            {/*    </div>*/}
-            {/*}*/}
         </div>
     );
 }
