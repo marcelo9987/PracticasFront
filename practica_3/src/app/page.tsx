@@ -15,17 +15,17 @@ const  Home =  () =>
     }, []);
 
     return(
-    <div>
+    <div className="home-page">
         <header className={"titulo"}>
             <h1>Colección de música</h1>
         </header>
-        <div>
+        <div className="home-actions">
 
             <Link href={`/albums/`}>
-                <button>Buscar</button>
+                <button className="home-action-btn">Buscar</button>
             </Link>
             <Link href={`/favoritos`}>
-                <button>Favoritos</button>
+                <button className="home-action-btn">Favoritos</button>
             </Link>
         </div>
     </div>

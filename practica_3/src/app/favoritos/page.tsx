@@ -1,31 +1,32 @@
 'use client'
 
 import {useLista} from "@/context/contextoFavoritos";
-import {useRouter} from "next/navigation";
 import {AlbumCard} from "@/components/CountryCard/AlbumCard";
+import "./page.css";
 
 
 const Favoritos = () =>
 {
     const {lista, eliminarFavorito} = useLista();
 
-    const router = useRouter();
-
-
-    console.log(lista);
     return (
-        <div>
-            <h2>Favoritos</h2>
+        <div className="favoritos-page">
+            <h2 className="favoritos-title">Favoritos</h2>
 
             {lista.length === 0 && (
-                <big>La lista de favoritos está vacía</big>
+                <big className="favoritos-empty">La lista de favoritos está vacía</big>
             )}
         {lista.map(album =>
             (
-                <div key={album.collectionId}>
+                <div key={album.collectionId} className="favoritos-item">
                     <AlbumCard
                     album={album}/>
-                    <button onClick={ () => eliminarFavorito(album.collectionId)}>❌</button>
+                    <button
+                        className="favoritos-remove-btn"
+                        onClick={ () => eliminarFavorito(album.collectionId)}
+                    >
+                        ❌
+                    </button>
                 </div>
             )
         )}

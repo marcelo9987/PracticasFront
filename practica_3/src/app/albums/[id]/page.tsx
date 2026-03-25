@@ -3,6 +3,7 @@ import {useParams} from "next/navigation";
 import {useEffect, useState} from "react";
 import {Album} from "@/types/Album";
 import {getAlbum} from "@/lib/api/albums";
+import "./page.css";
 
 
 const paginaIndividual = () =>

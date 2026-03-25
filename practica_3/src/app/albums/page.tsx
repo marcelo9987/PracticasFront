@@ -6,6 +6,7 @@ import {AlbumCard} from "@/components/CountryCard/AlbumCard";
 import {Album} from "@/types/Album";
 import {useRouter} from "next/navigation";
 import Link from "next/link";
+import "./page.css";
 
 const Buscador = () =>
 {
@@ -51,28 +52,28 @@ const Buscador = () =>
     }, [nClicks]);
 
     return (
-        <div>
-            <div>
+        <div className="albums-page">
+            <div className="volver-wrap">
                 <Link href={'/'}>
                     <button>Voltar</button>
                 </Link>
             </div>
 
             {error &&
-                <div><p>{error}</p>
+                <div className="mensage-estado"><p>{error}</p>
                 </div>
             }
 
             {!error && !estadoPagina &&
-                <div><p>Cargando...</p>
+                <div className="mensage-estado"><p>Cargando...</p>
                 </div>
             }
             {!error && estadoPagina &&
-                <div><input value={entrada}
+                <div className="buscador-wrap"><input value={entrada}
                          onChange={(e) => setEntrada(e.target.value)}/>
                     <button onClick={buscar}>Buscar</button>
-                    <div>
-                        <ol>
+                    <div className="resultados-wrap">
+                        <ol className="albums-lista">
                             {albums.map((album) => (
                                     <AlbumCard
                                         key={album.collectionId}
