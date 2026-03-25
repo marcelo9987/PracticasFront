@@ -1,0 +1,10 @@
+.album-card {
+    width: 250px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    transition: background-color 0.3s;
+}
+.album-card:hover {
+    background-color: indianred;
+}
+
