@@ -3,3 +3,5 @@ Contenidos a día de hoy:
 /practica_1/
 ## Práctica 2:
 /practica_2/
+## Práctica 3:
+/practica_3/
