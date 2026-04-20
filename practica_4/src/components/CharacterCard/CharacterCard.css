@@ -1,0 +1,25 @@
+.Tarjeta
+{
+    width:25vh;
+    height: 30vh;
+    /*display: flex;*/
+    /*flex-flow: column wrap;*/
+    /*justify-items: center;*/
+    background-color: firebrick;
+}
+
+.Enlace
+{
+    display: flex;
+    flex-flow: column wrap;
+    justify-items: center;
+    align-items: center;
+
+}
+
+.Enlace img
+{
+    height:20vh;
+    width:20vh;
+
+}
